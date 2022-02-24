@@ -1,4 +1,5 @@
-﻿using Excel;
+﻿
+using ExcelDataReader;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -51,12 +52,19 @@ namespace MarsFramework.Global
 
             private static DataTable ExcelToDataTable(string fileName, string SheetName)
             {
-                // Open file and return as Stream
-                using (System.IO.FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
+                 //Open file and return as Stream
+               using (System.IO.FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
                 {
                     using (IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream))
                     {
-                        excelReader.IsFirstRowAsColumnNames = true;
+                        //excelReader.IsFirstRowAsColumnNames = true;
+                        DataSet resultSet = excelReader.AsDataSet(new ExcelDataSetConfiguration()
+                        {
+                            ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                            {
+                                UseHeaderRow = true
+                            }
+                        });
 
                         //Return as dataset
                         DataSet result = excelReader.AsDataSet();
@@ -66,12 +74,12 @@ namespace MarsFramework.Global
                         // store it in data table
                         DataTable resultTable = table[SheetName];
 
-                        //excelReader.Dispose();
-                        //excelReader.Close();
-                        // return
+                        excelReader.Dispose();
+                        excelReader.Close();
+                        
                         return resultTable;
                     }
-                }
+               }
             }
 
             public static string ReadData(int rowNumber, string columnName)
