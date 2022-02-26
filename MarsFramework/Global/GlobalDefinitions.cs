@@ -49,38 +49,65 @@ namespace MarsFramework.Global
                 dataCol.Clear();
             }
 
-
-            private static DataTable ExcelToDataTable(string fileName, string SheetName)
+            //trial
+            private static DataTable ExcelToDataTable(string fileName, string sheetName)
             {
-                 //Open file and return as Stream
-               using (System.IO.FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
+                // Open file and return as Stream
+                using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
                 {
-                    using (IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream))
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        //excelReader.IsFirstRowAsColumnNames = true;
-                        DataSet resultSet = excelReader.AsDataSet(new ExcelDataSetConfiguration()
+
+                        var result = reader.AsDataSet(new ExcelDataSetConfiguration()
                         {
-                            ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                            ConfigureDataTable = (data) => new ExcelDataTableConfiguration()
                             {
                                 UseHeaderRow = true
                             }
                         });
-
-                        //Return as dataset
-                        DataSet result = excelReader.AsDataSet();
                         //Get all the tables
-                        DataTableCollection table = result.Tables;
-
-                        // store it in data table
-                        DataTable resultTable = table[SheetName];
-
-                        excelReader.Dispose();
-                        excelReader.Close();
+                        var table = result.Tables;
                         
+                        // store it in data table
+                        var resultTable = table[sheetName];
                         return resultTable;
                     }
-               }
+                }
             }
+            //End
+
+
+            //private static DataTable ExcelToDataTable(string fileName, string SheetName)
+            //{
+            //    //Open file and return as Stream
+            //    using (System.IO.FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
+            //    {
+            //        using (IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream))
+            //        {
+            //         excelReader.IsFirstRowAsColumnNames = true;//This wont work anymore
+            //         //DataSet resultSet = excelReader.AsDataSet(new ExcelDataSetConfiguration()
+            //         //{
+            //         //    ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+            //         //    {
+            //         //        UseHeaderRow = true
+            //         //    }
+            //         //});
+
+            //         //Return as dataset
+            //         DataSet result = excelReader.AsDataSet();
+            //        //Get all the tables
+            //         DataTableCollection table = result.Tables;
+
+            //        // store it in data table
+            //        DataTable resultTable = table[SheetName];
+
+            //         excelReader.Dispose();
+            //         excelReader.Close();
+
+            //        return resultTable;
+            //        }
+            //    }
+            //}
 
             public static string ReadData(int rowNumber, string columnName)
             {
@@ -91,7 +118,7 @@ namespace MarsFramework.Global
                     rowNumber = rowNumber - 1;
                     string data = (from colData in dataCol
                                    where colData.colName == columnName && colData.rowNumber == rowNumber
-                                   select colData.colValue).SingleOrDefault();
+                                   select colData.colValue).FirstOrDefault();
 
                     //var datas = dataCol.Where(x => x.colName == columnName && x.rowNumber == rowNumber).SingleOrDefault().colValue;
 

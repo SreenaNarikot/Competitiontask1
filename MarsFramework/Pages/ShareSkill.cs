@@ -133,13 +133,14 @@ namespace MarsFramework.Pages
 
             //Adding tags
             Tags.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Tags"));
-            Tags.Click();
+            Tags.SendKeys(Keys.Enter);
+            //Tags.Click();
             
             //Servicetype and location type
-            ServiceTypeOptions.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "ServiceType"));
-            LocationTypeOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "LocationType"));
+            //LocationTypeOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "LocationType"));
 
             //reading data for startdate and enddate
+            GlobalDefinitions.wait(4);
             StartDateDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Startdate"));
             EndDateDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Enddate"));
 
@@ -157,6 +158,7 @@ namespace MarsFramework.Pages
             
             //SkillTradeOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill-Exchange"));
             SkillExchange.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill-Exchange"));
+            SkillExchange.SendKeys(Keys.Enter);
             //ActiveOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Active"));
             Save.Click();
 
@@ -164,6 +166,8 @@ namespace MarsFramework.Pages
 
         internal void EditShareSkill()
         {
+            GlobalDefinitions.wait(4);
+
 
         }
     }
