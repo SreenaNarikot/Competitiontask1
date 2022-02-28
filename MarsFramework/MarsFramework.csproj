@@ -164,6 +164,7 @@
     <Content Include="TestReports\ExtentReports 2.0_files\extent.css" />
     <Content Include="TestReports\ExtentReports 2.0_files\extent.js" />
     <Content Include="TestReports\MarsReports.html" />
+    <Content Include="TestReports\ScreenshotsReport_25-18-2022_1820.jpeg" />
     <Content Include="TestReports\Screenshots\Report_16-41-2018_4153.jpeg" />
     <Content Include="TestReports\Screenshots\Report_16-50-2018_5013.jpeg" />
     <Content Include="TestReports\Screenshots\Report_17-01-2018_133.jpeg" />
