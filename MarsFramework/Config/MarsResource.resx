@@ -124,6 +124,9 @@
   <data name="ExcelPath" xml:space="preserve">
     <value>C:\MVPProject\Competitiontask1\MarsFramework\ExcelData\TestData.xlsx</value>
   </data>
+  <data name="Filepath" xml:space="preserve">
+    <value>C:\MVPProject\Competitiontask1\MarsFramework\WorkSample\Samplefile</value>
+  </data>
   <data name="IsLogin" xml:space="preserve">
     <value>true</value>
     <comment>If true Login, else Register</comment>

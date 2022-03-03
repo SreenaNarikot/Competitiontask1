@@ -1,10 +1,14 @@
-﻿using MarsFramework.Config;
+﻿using AutoItX3Lib;
+using MarsFramework.Config;
 using MarsFramework.Global;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Threading;
+using static NUnit.Core.NUnitFramework;
+
+
 
 namespace MarsFramework.Pages
 {
@@ -102,9 +106,18 @@ namespace MarsFramework.Pages
         [FindsBy(How = How.XPath, Using = "//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field']")]
         private IWebElement ActiveOption { get; set; }
 
+        //Click on WorkSample upload
+        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i")]
+        private IWebElement WorkSample { get; set; }
+
         //Click on Save button
         [FindsBy(How = How.XPath, Using = "//input[@value='Save']")]
         private IWebElement Save { get; set; }
+
+        //Shareskill popuperrormessage
+        [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div")]
+        private IWebElement Popuperror { get; set; }
+
 
         //Delete tag
         [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[4]/div[2]/div/div/div/span/a")]
@@ -113,6 +126,7 @@ namespace MarsFramework.Pages
         //Delete the skill-Exchange
         [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[8]/div[4]/div/div/div/div/span/a")]
         private IWebElement RemoveSkillExchageTag { get; set; }
+
 
 
 
@@ -169,10 +183,30 @@ namespace MarsFramework.Pages
             //SkillTradeOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill-Exchange"));
             SkillExchange.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill-Exchange"));
             SkillExchange.SendKeys(Keys.Enter);
+
+            //WorkSample Upload
+            WorkSample.Click();
+            AutoItX3 autoIt = new AutoItX3();
+            autoIt.WinActivate("Open");
+            Thread.Sleep(1000);
+            autoIt.Send(Base.Filepath);
+            Thread.Sleep(2000);
+            autoIt.Send("{ENTER}");
+
             Thread.Sleep(1000);
             //ActiveOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Active"));
             Save.Click();
-            
+ 
+            //Checking for shareskill updatation successfull            
+            string error = Popuperror.Text;
+            if (error == "Please complete the form correctly.")
+            {
+                Console.WriteLine(error);
+            }
+            else
+            {
+                Console.WriteLine("ShareSkill Saved");
+            }    
         }
 
         internal void  EditShareSkill()
@@ -234,11 +268,21 @@ namespace MarsFramework.Pages
             SkillExchange.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill-Exchange"));
             SkillExchange.SendKeys(Keys.Enter);
             Thread.Sleep(1000);
+
+            //WorkSample Upload
+            WorkSample.Click();
+            AutoItX3 autoIt = new AutoItX3();
+            autoIt.WinActivate("Open");
+            Thread.Sleep(1000);
+            autoIt.Send(Base.Filepath);
+            Thread.Sleep(2000);
+            autoIt.Send("{ENTER}");
+
             //ActiveOption.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Active"));
             Save.Click();
            
 
         }
-
+        
     }
 }

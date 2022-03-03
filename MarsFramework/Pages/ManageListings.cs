@@ -36,6 +36,7 @@ namespace MarsFramework.Pages
         //Delete the listing
         [FindsBy(How = How.XPath, Using = "//table[1]/tbody[1]")]
         private IWebElement delete { get; set; }
+
         //Delete button of the first record in the Listing
         [FindsBy(How = How.XPath, Using = "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr/td[8]/div/button[3]/i")]
         private IWebElement deletetherecord { get; set; }
